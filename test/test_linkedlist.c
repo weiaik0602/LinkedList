@@ -78,6 +78,7 @@ void test_LinkedList_LinkedList_InitV2(void)
 
 void test_LinkedList_listAdd_on_InitV2(void)
 {
+  int x;
   LinkedList list;
     Student Ali = {
       "Ali",                        //name
@@ -105,10 +106,11 @@ void test_LinkedList_listAdd_on_InitV2(void)
     
     listInitV2(&list,&item);
     listAdd(&list,&itemBaba);
+    x=Compare(list,"Ali");
     TEST_ASSERT_EQUAL_PTR(&item,list.head);
     TEST_ASSERT_EQUAL_PTR(&itemBaba,list.tail);
     TEST_ASSERT_EQUAL(3,list.len);
     TEST_ASSERT_NULL(itemBaba.next);
     TEST_ASSERT_EQUAL_PTR(&Ali,item.data);
-    
+    TEST_ASSERT_EQUAL(0,x);
 }

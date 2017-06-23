@@ -18,4 +18,6 @@ struct LinkedList{
 void listInit(LinkedList *list);
 void listAdd(LinkedList *list,Item *item);
 void listInitV2(LinkedList *list,Item *item);
+int Compare(LinkedList list, char name);
+int ListFind(LinkedList list, char name);
 #endif // _LINKEDLIST_H
