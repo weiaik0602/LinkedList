@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "linkedlist.h"
 #include "student.h"
-
+#include <string.h>
 void listInit(LinkedList *list) {
   list->head = NULL;
   list->tail = NULL;
@@ -16,7 +16,9 @@ void listAdd(LinkedList *list,Item *item){
     list->tail=item;
     }
     else{
-      list->tail=item;
+		list->tail->next=item;
+		list->tail=item;
+	  
     } 
     list->len +=1;
     item->next=NULL;
@@ -30,51 +32,71 @@ void listInitV2(LinkedList *list,Item *item){
     item->next=NULL;
 }
 
-int Compare(LinkedList list, char name){
-  Student student;
-  student=(Student*)(list->head);
-  int result=strcmp(student.name,name);
-  return result;
-}
-int ListFind(LinkedList list, char name)
-{
-  //Item temp;
-  //ListInit (*temp);
-  int result,n=1;
-  
-  while(list->head !=NULL){
-  result=Compare(list,name);
-  if(result!=0){
-    list->head=item;
-    n++;
-  }
-  else 
-    return n;
-  return n;
-}
-void ListRemove(LinkedList *list, char name)
-{
-  LinkList temp1,temp2;
-  //ListInit(*temp);
-  temp1=list;
-  temp2=list;
-  
-  int x;
-  x=ListFind(list,name);
-  if(x==1){
-    list->head=item;
+
+void listRemoveHead(LinkedList *list){
+  if(list->head == NULL){        //if the list is empty, return NUll
+    return NULL;
   }
   else{
-  for(int y=0;y<x+2;y++){
-    temp1->head=item;
+    if(list->head == list->tail){
+      //if we only gt 1 data,we empty the list with listInit
+      listInit(list);
+    }
+    else{
+    list->head = list->head->next;
+    list->len--;
   }
-  for(int i=0;i<x-2;i++)
-  {
-    list->head=item;
   }
-  
-    list->head=temp1->head->item;
-    
-   
 }
+
+
+
+
+void listRemoveByName(LinkedList *list, char* name)
+{
+  Item *previous,*current;
+  int x;
+  //Student *student;
+  
+  //for the 1st node, there is no previous,and current is the list->head
+  
+  previous=NULL;
+  current=list->head;
  
+  
+  /*finding the node that we want, if not match with the name, the previous pointer become current code and the current pointer point to the next node until we find it*/
+   while(strcmp(((Student*)current->data)->name, name)!=0 )
+   {
+		previous=current;
+		current=current->next;
+		if(current==NULL)
+			break;
+   }
+   if(current==NULL)
+   {
+	   //no data matched until last node
+	   return NULL;
+   }
+   else
+   {
+	   if(previous==NULL)
+	   {
+		   //the data is the head
+		   listRemoveHead(list);
+	   }
+	   else if(current==list->tail)
+	   {
+		   //the item is tail
+		   list->tail=previous;
+		   list->tail->next=NULL;
+		   list->len--;
+	   }
+	   
+	   else
+	   {
+		   //the item is in between 2 node
+		   previous->next=current->next;
+		   list->len--;
+	   }
+   }
+}

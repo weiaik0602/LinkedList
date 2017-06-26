@@ -18,6 +18,7 @@ struct LinkedList{
 void listInit(LinkedList *list);
 void listAdd(LinkedList *list,Item *item);
 void listInitV2(LinkedList *list,Item *item);
-int Compare(LinkedList list, char name);
-int ListFind(LinkedList list, char name);
+void listRemoveHead(LinkedList *list);
+void listRemoveByName(LinkedList *list, char* name);
+int Compare(Item* current,char* name2);
 #endif // _LINKEDLIST_H
